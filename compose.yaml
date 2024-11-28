@@ -1,0 +1,50 @@
+name: ecommerce-demystifydigital
+
+volumes:
+  appdata:
+  dbdata:
+  rabbitmqdata:
+
+services:
+  ecommerce-demystifydigital-app:
+    container_name: ecommerce-demystifydigital-app
+    build: .
+    privileged: true
+    environment:
+      - DEBUG=1
+      # 6GB memory limit
+      - PHP_MEMORY_LIMIT=6144M
+    ports:
+      - 3000:80
+    volumes:
+      - appdata:/var/www/html
+
+  ecommerce-demystifydigital-db:
+    container_name: ecommerce-demystifydigital-db
+    image: mariadb:10.6
+    command: --max_allowed_packet=64M --optimizer_use_condition_selectivity=1 --optimizer_switch="rowid_filter=off" --skip-ssl
+    env_file: env/db.env
+    volumes:
+      - dbdata:/var/lib/mysql
+
+  ecommerce-demystifydigital-redis:
+    container_name: ecommerce-demystifydigital-redis
+    image: redis:7.4.1
+
+  ecommerce-demystifydigital-opensearch:
+    container_name: ecommerce-demystifydigital-opensearch
+    image: opensearchproject/opensearch:latest
+    env_file: env/opensearch.env
+    environment:
+      - "discovery.type=single-node"
+      - "cluster.routing.allocation.disk.threshold_enabled=false"
+      - "index.blocks.read_only_allow_delete"
+      - "OPENSEARCH_JAVA_OPTS=-Xms1g -Xmx1g"
+      - "max_map_count=262144"
+
+  ecommerce-demystifydigital-rabbitmq:
+    container_name: ecommerce-demystifydigital-rabbitmq
+    image: rabbitmq:4
+    volumes:
+      - rabbitmqdata:/var/lib/rabbitmq
+    env_file: env/rabbitmq.env
