@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+[[ ! "$PWD" =~ /var/www/html$ ]] && echo "Please run commands in the root directory." && exit
+composer "$@"
+bin/fixperms

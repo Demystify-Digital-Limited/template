@@ -1,13 +1,14 @@
 #!/usr/bin/env bash
+[[ ! "$PWD" =~ /var/www/html$ ]] && echo "Please run commands in the root directory." && exit
 set -o errexit
 
-bin/clinotty bin/magento setup:install \
+bin/magento setup:install \
   --db-host="$MYSQL_HOST" \
   --db-name="$MYSQL_DATABASE" \
   --db-user="$MYSQL_USER" \
   --db-password="$MYSQL_PASSWORD" \
-  --base-url=https://"$DOMAIN"/ \
-  --base-url-secure=https://"$DOMAIN"/ \
+  --base-url=http://"$DOMAIN" \
+  --base-url-secure=https://"$DOMAIN" \
   --backend-frontname="$MAGENTO_ADMIN_FRONTNAME" \
   --admin-firstname="$MAGENTO_ADMIN_FIRST_NAME" \
   --admin-lastname="$MAGENTO_ADMIN_LAST_NAME" \
@@ -32,11 +33,11 @@ bin/clinotty bin/magento setup:install \
   --session-save-redis-host="$REDIS_SESSION_SAVE_HOST" \
   --session-save-redis-log-level=4 \
   --session-save-redis-db=2 \
-  --elasticsearch-host="$ES_HOST" \
-  --elasticsearch-port="$ES_PORT" \
   --opensearch-host="$OPENSEARCH_HOST" \
   --opensearch-port="$OPENSEARCH_PORT" \
   --search-engine=opensearch \
   --use-rewrites=1 \
   --cleanup-database \
   --no-interaction
+
+bin/fixperms

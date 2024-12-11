@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+[[ ! "$PWD" =~ /var/www/html$ ]] && echo "Please run commands in the root directory." && exit
+set -o errexit
+
+# Fix perms before to setup:upgrade can run, and after to correct any changes. The other way is to run as www-data but eh...
+bin/fixperms
+bin/magento setup:upgrade
+bin/fixperms
+bin/magento setup:di:compile
+bin/magento setup:static-content:deploy -f
+bin/magento indexer:reindex
+bin/magento cache:flush
+bin/fixperms
+echo "Done."
