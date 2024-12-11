@@ -17,7 +17,7 @@ services:
     ports:
       - 3000:80
     volumes:
-      - appdata:/var/www/html
+      - ./src:/var/www/html
 
   demo-demystifydigital-db:
     container_name: demo-demystifydigital-db
