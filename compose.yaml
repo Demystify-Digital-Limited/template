@@ -13,7 +13,9 @@ services:
       - 3000:80
     volumes:
       - ./src:/var/www/html
-      - ./bin:/var/www/html/bin
+      # Uncomment the following lines to mount the bin directory
+      # DO NOT uncomment these lines if you are creating a new site
+      # - ./bin:/var/www/html/bin
 
   sub-domain-demystifydigital-db:
     container_name: sub-domain-demystifydigital-db
