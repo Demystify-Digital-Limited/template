@@ -1,13 +1,8 @@
-name: demo-demystifydigital
-
-volumes:
-  appdata:
-  dbdata:
-  rabbitmqdata:
+name: sub-domain
 
 services:
-  demo-demystifydigital-app:
-    container_name: demo-demystifydigital-app
+  sub-domain-demystifydigital-app:
+    container_name: sub-domain-demystifydigital-app
     build: .
     privileged: true
     environment:
@@ -20,21 +15,21 @@ services:
       - ./src:/var/www/html
       - ./bin:/var/www/html/bin
 
-  demo-demystifydigital-db:
-    container_name: demo-demystifydigital-db
+  sub-domain-demystifydigital-db:
+    container_name: sub-domain-demystifydigital-db
     image: mariadb:10.6
     command: --max_allowed_packet=64M --optimizer_use_condition_selectivity=1 --optimizer_switch="rowid_filter=off" --skip-ssl
     env_file: env/db.env
     volumes:
-      - dbdata:/var/lib/mysql
+      - ./.docker/dbdata:/var/lib/mysql
 
-  demo-demystifydigital-redis:
-    container_name: demo-demystifydigital-redis
+  sub-domain-demystifydigital-redis:
+    container_name: sub-domain-demystifydigital-redis
     image: redis:7.4.1
 
-  demo-demystifydigital-opensearch:
-    container_name: demo-demystifydigital-opensearch
-    image: opensearchproject/opensearch:latest
+  sub-domain-demystifydigital-opensearch:
+    container_name: sub-domain-demystifydigital-opensearch
+    image: opensearchproject/opensearch:2.12.0
     env_file: env/opensearch.env
     environment:
       - "discovery.type=single-node"
@@ -43,9 +38,9 @@ services:
       - "OPENSEARCH_JAVA_OPTS=-Xms1g -Xmx1g"
       - "max_map_count=262144"
 
-  demo-demystifydigital-rabbitmq:
-    container_name: demo-demystifydigital-rabbitmq
+  sub-domain-demystifydigital-rabbitmq:
+    container_name: sub-domain-demystifydigital-rabbitmq
     image: rabbitmq:4
     volumes:
-      - rabbitmqdata:/var/lib/rabbitmq
+      - ./.docker/rabbitmqdata:/var/lib/rabbitmq
     env_file: env/rabbitmq.env
