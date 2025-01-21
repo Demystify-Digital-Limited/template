@@ -14,3 +14,5 @@ src/pub/media
 # Why the hell does this exist. It literally exists to break Git... :(
 src/dev/tests/acceptance/tests/_data/adobe-base-image-long-name-image-long-name-image-long-name-image-long-name-image-long-name-image-long-name-image-long-name-image-long-name-image-long-name.jpg
 .docker
+# Remove this in prod
+src/
