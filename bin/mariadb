@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+[[ ! "$PWD" =~ /var/www/html$ ]] && echo "Please run commands in the root directory." && exit
+if ! command -v mariadb 2>&1 >/dev/null
+then
+    echo "mariadb is missing. Installing...."
+    apt install mariadb-client
+fi
+
+if [ -t 0 ]; then
+  # Need tty to run mysql shell
+  mariadb -h"${MYSQL_HOST}" -u"${MYSQL_USER}" -p"${MYSQL_PASSWORD}" "${MYSQL_DATABASE}" "$@"
+else
+  # Read from stdin, ex: bin/mysql < dbdump.sql
+  mariadb -h"${MYSQL_HOST}" -u"${MYSQL_USER}" -p"${MYSQL_PASSWORD}" "${MYSQL_DATABASE}" "$@"
+fi

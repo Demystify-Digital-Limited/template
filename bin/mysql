@@ -3,13 +3,22 @@
 if ! command -v mysql 2>&1 >/dev/null
 then
     echo "MySQL is missing. Installing...."
-    apk add mysql-client
+    apt install mysql-client
 fi
 
-if [ -t 0 ]; then
-  # Need tty to run mysql shell
-  mysql -h"${MYSQL_HOST}" -u"${MYSQL_USER}" -p"${MYSQL_PASSWORD}" "${MYSQL_DATABASE}" "$@"
+printf 'WARNING: mysql is deprecated. You should use bin/mariadb. Do you want to continue (y/n)? '
+read answer
+
+if [ "$answer" != "${answer#[Yy]}" ] ;then 
+	if [ -t 0 ]; then
+		# Need tty to run mysql shell
+		mysql -h"${MYSQL_HOST}" -u"${MYSQL_USER}" -p"${MYSQL_PASSWORD}" "${MYSQL_DATABASE}" "$@"
+	else
+		# Read from stdin, ex: bin/mysql < dbdump.sql
+		mysql -h"${MYSQL_HOST}" -u"${MYSQL_USER}" -p"${MYSQL_PASSWORD}" "${MYSQL_DATABASE}" "$@"
+	fi
 else
-  # Read from stdin, ex: bin/mysql < dbdump.sql
-  mysql -h"${MYSQL_HOST}" -u"${MYSQL_USER}" -p"${MYSQL_PASSWORD}" "${MYSQL_DATABASE}" "$@"
+    echo "Exiting..."
 fi
+
+

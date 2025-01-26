@@ -9,13 +9,14 @@ services:
       - DEBUG=1
       # 6GB memory limit
       - PHP_MEMORY_LIMIT=6144M
+      - DOMAIN=localhost
     ports:
       - 3000:80
     volumes:
       - ./src:/var/www/html
       # Uncomment the following lines to mount the bin directory
       # DO NOT uncomment these lines if you are creating a new site
-      # - ./bin:/var/www/html/bin
+      - ./bin:/var/www/html/bin
 
   sub-domain-demystifydigital-db:
     container_name: sub-domain-demystifydigital-db
@@ -28,6 +29,7 @@ services:
   sub-domain-demystifydigital-redis:
     container_name: sub-domain-demystifydigital-redis
     image: redis:7.4.1
+    env_file: env/redis.env
 
   sub-domain-demystifydigital-opensearch:
     container_name: sub-domain-demystifydigital-opensearch

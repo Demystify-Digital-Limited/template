@@ -1,11 +1,11 @@
-FROM shinsenter/magento:php8.1-alpine
+FROM shinsenter/magento:php8.1
 
 # Add the application files
 ADD --chown=$APP_USER:$APP_GROUP ./src/ /var/www/html/
 ADD --chown=$APP_USER:$APP_GROUP ./bin/ /var/www/html/bin/
 
 # Install required packages
-RUN apk add curl git mysql-client nano bash coreutils
+RUN apt install curl git nano bash coreutils
 
 # Install Composer
 RUN curl -s https://getcomposer.org/installer | php
