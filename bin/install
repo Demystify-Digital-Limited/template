@@ -36,7 +36,7 @@ bin/magento setup:install \
   --opensearch-host="$OPENSEARCH_HOST" \
   --opensearch-port="$OPENSEARCH_PORT" \
   --search-engine=opensearch \
-  --use-rewrites=1 \
+  --use-rewrites=0 \
   --cleanup-database \
   --no-interaction
 

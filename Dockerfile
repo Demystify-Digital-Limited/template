@@ -2,7 +2,10 @@ FROM shinsenter/magento:php8.1
 
 # Install required packages
 RUN apt update && apt upgrade -y
-RUN apt install curl git nano bash coreutils cron
+RUN apt install curl git nano bash coreutils cron -y
+
+# Install required PHP extensions
+RUN phpaddmod gd intl pdo_mysql soap xsl bcmath zip opcache
 
 # Install Composer
 RUN curl -s https://getcomposer.org/installer | php
@@ -10,9 +13,17 @@ RUN alias composer='php composer.phar'
 
 # Set default environment variables
 ENV TZ=Europe/London
-ENV ALLOW_RUNTIME_PHP_ENVVARS=1
 ENV PHP_MEMORY_LIMIT=6144M
 
-RUN crontab -l | { cat; echo "* * * * * /usr/local/bin/php /var/www/html/bin/magento cron:run"; } | crontab -
+# Copy the download file from the bin directory to /var/www
+COPY ./bin /var/www/bin
+RUN chmod +x /var/www/bin/*
+
+# Disable auto run
+ENV DISABLE_AUTORUN_CREATING_PROJECT="true"
+ENV DISABLE_AUTORUN_COMPOSER_INSTALL="true"
+
+# Cron
+ENV ENABLE_CRONTAB=1
 
 EXPOSE 80

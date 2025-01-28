@@ -1,6 +1,17 @@
-# Remove this in prod
 src/
-
+src/generated
+src/vendor
+src/pub/static
+src/var/cache
+src/var/composer_home
+src/var/page_cache
+src/var/view_preprocessed
+src/var/log
+src/var/report
+src/.htaccess
+src/var/tmp
+src/pub/media
+.htaccess
 src/generated
 src/vendor
 src/pub/static
