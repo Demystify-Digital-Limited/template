@@ -46,7 +46,7 @@ copy_env() {
 web-mkdir "$APP_PATH" "$COMPOSER_HOME"
 cd "$APP_PATH"
 
-read -p "WARNING! Craig, you'll want to read this! This script will perform several operations including deleting the /src folder. Do you want to proceed? (yes/no): " proceed
+read -p "WARNING! This script will perform several operations including deleting the /src folder. Do you want to proceed? (yes/no): " proceed
 if [ "$proceed" != "yes" ]; then
     echo "Operation cancelled."
     exit 1
@@ -58,7 +58,7 @@ if [ "$confirmation" != "one hundo percent, do it" ]; then
 	exit 1
 fi
 
-echo "Alright, if anything breaks or we lose data, you only have yourself to blame. You've been warned!"
+echo "Alright, if anything breaks or we lose data, you only have yourself to blame. You've been warned! Haha!"
 
 # Scary!
 rm -rf "$APP_PATH"/{*,.*}
