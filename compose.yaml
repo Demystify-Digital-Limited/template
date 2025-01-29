@@ -3,7 +3,7 @@ name: sub-domain
 services:
   sub-domain-demystifydigital-app:
     container_name: sub-domain-demystifydigital-app
-    build: .
+    build: ./dockerfiles/Dockerfile
     privileged: true
     env_file: env/all.env
     environment:
