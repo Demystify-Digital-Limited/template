@@ -52,6 +52,7 @@ echo "Updating misc files..."
 cp -r ./template-main/.gitignore ./.gitignore
 cp -r ./template-main/.dockerignore ./.dockerignore
 cp -r ./template-main/env/all.env.example ./env/all.env.example
+cp -r ./template-main/lib/* ./lib/
 cp -r ./template-main/version ./version
 
 echo "Update complete!"
