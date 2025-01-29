@@ -1,0 +1,81 @@
+#!/usr/bin/env bash
+if [[ -f /.dockerenv ]]; then
+	echo "ERROR: This script is intended to be run on the host machine, not inside the container."
+	exit 1
+fi
+
+read -p "WARNING: This command will interface with the Git repository this site is linked to. Make sure your changes are either stashed, or commited before continuing. Are you sure you want to continue? (y/n) " -n 1 -r
+echo
+if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+	echo "Operation aborted."
+	exit 1
+fi
+
+echo "Checking for updates..."
+if [[ -f "version" ]]; then
+	cat version > /dev/null
+else
+	echo "No version file found. Has the site been migrated to use the template yet?"
+fi
+
+REMOTE_VERSION=$(curl -s https://raw.githubusercontent.com/Demystify-Digital-Limited/template/main/version)
+if [[ -z "$REMOTE_VERSION" ]]; then
+	echo "Unable to fetch remote version."
+	exit 1
+fi
+
+LOCAL_VERSION=$(cat version)
+if [[ "$LOCAL_VERSION" == "$REMOTE_VERSION" ]]; then
+	echo "The template is up to date."
+	exit 0
+else
+	echo "A new version of the template is available: $REMOTE_VERSION"
+	echo "Upgrading from $LOCAL_VERSION to $REMOTE_VERSION..."
+fi
+
+echo "Downloading the latest template..."
+curl -L -o template.zip https://github.com/Demystify-Digital-Limited/template/archive/main.zip > /dev/null
+
+echo "Unzipping the template..."
+unzip -o template.zip > /dev/null
+
+echo "Updating bin files..."
+cp -r ./template-main/bin/* ./bin/
+
+echo "Updating dockerfiles..."
+cp -r ./template-main/dockerfiles/* ./dockerfiles/
+
+echo "Updating docs files..."
+cp -r ./template-main/docs/* ./docs/
+
+echo "Updating misc files..."
+cp -r ./template-main/compose.yaml ./compose.yaml
+cp -r ./template-main/.gitignore ./.gitignore
+cp -r ./template-main/.dockerignore ./.dockerignore
+cp -r ./template-main/env/all.env.example ./env/all.env.example
+cp -r ./template-main/version ./version
+
+echo "Update complete!"
+
+echo "Cleaning up..."
+rm -rf template.zip template-main
+
+echo "Verifying the Git repository..."
+REPO_URL=$(git config --get remote.origin.url)
+if [[ "$REPO_URL" = *"Demystify-Digital-Limited/template"* ]]; then
+	echo "ERROR: This script ISN'T intended to be run in the 'Demystify-Digital-Limited/template' repository."
+	exit 1
+fi
+
+echo "Committing changes..."
+if [[ -n $(git status --porcelain) ]]; then
+	echo "WARNING: There are changes in the repository. To prevent data loss, the update process has been aborted and you must commit or stash your changes before trying again."
+	exit 1
+else
+	echo "No changes detected in the repository."
+fi
+
+git add .
+git commit -m "build(lib/update): Update template to version $REMOTE_VERSION"
+
+echo "The template has been updated to version $REMOTE_VERSION. I've commited changes already but have NOT pushed to remote. Please test that everything is working before pushing. Have a nice day!"
