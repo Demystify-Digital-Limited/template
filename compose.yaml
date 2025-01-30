@@ -1,8 +1,8 @@
 name: sub-domain
 
 services:
-  sub-domain-demystifydigital-app:
-    container_name: sub-domain-demystifydigital-app
+  sub-domain-app:
+    container_name: sub-domain-app
     build:
       context: .
       dockerfile: ./dockerfiles/8.1
@@ -16,21 +16,21 @@ services:
     volumes:
       - ./src:/var/www/html
 
-  sub-domain-demystifydigital-db:
-    container_name: sub-domain-demystifydigital-db
+  sub-domain-db:
+    container_name: sub-domain-db
     image: mariadb:10.6
     command: --max_allowed_packet=64M --optimizer_use_condition_selectivity=1 --optimizer_switch="rowid_filter=off" --skip-ssl
     env_file: env/db.env
     volumes:
       - ./.docker/dbdata:/var/lib/mysql
 
-  sub-domain-demystifydigital-redis:
-    container_name: sub-domain-demystifydigital-redis
+  sub-domain-redis:
+    container_name: sub-domain-redis
     image: redis:7.4.1
     env_file: env/redis.env
 
-  sub-domain-demystifydigital-opensearch:
-    container_name: sub-domain-demystifydigital-opensearch
+  sub-domain-opensearch:
+    container_name: sub-domain-opensearch
     image: opensearchproject/opensearch:2.12.0
     env_file: env/opensearch.env
     environment:
@@ -40,8 +40,8 @@ services:
       - "OPENSEARCH_JAVA_OPTS=-Xms1g -Xmx1g"
       - "max_map_count=262144"
 
-  sub-domain-demystifydigital-rabbitmq:
-    container_name: sub-domain-demystifydigital-rabbitmq
+  sub-domain-rabbitmq:
+    container_name: sub-domain-rabbitmq
     image: rabbitmq:4
     volumes:
       - ./.docker/rabbitmqdata:/var/lib/rabbitmq
