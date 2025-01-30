@@ -52,8 +52,8 @@ if [ "$proceed" != "yes" ]; then
     exit 1
 fi
 
-read -p "Are you definetly sure you want to proceed? Type 'one hundo percent, do it' to continue: " confirmation
-if [ "$confirmation" != "one hundo percent, do it" ]; then
+read -p "Are you definetly sure you want to proceed? Type 'confirm' to continue: " confirmation
+if [ "$confirmation" != "confirm" ]; then
 	echo "Operation cancelled."
 	exit 1
 fi
