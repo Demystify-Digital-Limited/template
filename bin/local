@@ -18,6 +18,7 @@ if [[ "$mode" == "enable" ]]; then
 	bin/cliq bin/magento config:set web/secure/use_in_adminhtml 0
 	bin/cliq bin/magento config:set web/unsecure/base_url http://localhost:3000/
 	bin/cliq bin/magento config:set web/secure/base_url http://localhost:3000/
+	bin/magento deploy:mode:set developer
 	echo "Running bin/cmds..."
 	bin/cliq bin/cmds
 	echo "Local mode enabled. Magento is at: http://localhost:3000. You can run 'bin/local disable' to disable local mode."
@@ -26,6 +27,7 @@ else
 	bin/cliq bin/magento config:set web/secure/use_in_adminhtml 1
 	bin/cliq bin/magento config:set web/unsecure/base_url http://localhost:80/
 	bin/cliq bin/magento config:set web/secure/base_url http://localhost:80/
+	bin/magento deploy:mode:set production
 	echo "Running bin/cmds..."
 	bin/cliq bin/cmds
 	echo "Local mode disabled. Magento is at: https://$DOMAIN"
