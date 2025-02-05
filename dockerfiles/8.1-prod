@@ -27,5 +27,7 @@ ENV TZ=Europe/London
 ENV ALLOW_RUNTIME_PHP_ENVVARS=1
 ENV PHP_MEMORY_LIMIT=6144M
 ENV DISABLE_AUTORUN_CREATING_PROJECT="true"
+# We will automatically run composer install and project setup during build
+ENV DISABLE_AUTORUN_COMPOSER_INSTALL="true"
 
 EXPOSE 80
