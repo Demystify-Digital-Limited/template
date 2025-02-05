@@ -41,8 +41,8 @@ else
 	bin/magento app:config:import -n
 	bin/cliq bin/magento config:set web/secure/use_in_frontend 1
 	bin/cliq bin/magento config:set web/secure/use_in_adminhtml 1
-	bin/cliq bin/magento config:set web/unsecure/base_url http://localhost:80/
-	bin/cliq bin/magento config:set web/secure/base_url https://localhost:80/
+	bin/cliq bin/magento config:set web/unsecure/base_url http://$DOMAIN/
+	bin/cliq bin/magento config:set web/secure/base_url https://$DOMAIN/
 	echo "Enabled HTTPS"
 	echo "Imported production environment variables."
 	bin/magento deploy:mode:set production
