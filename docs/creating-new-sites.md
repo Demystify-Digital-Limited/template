@@ -10,5 +10,9 @@
     > If you recieve any errors, it is most likely a faulty `all.env` file. Please double check the file and make sure it's values are correct.
 
 7. Once Magento has been installed, run `bin/cmds` to run the common Magneto commands.
-8. Your magento site is running, however, it's using HTTPS by default. To access Magento on HTTP, run `bin/local` and enable it.
-9. Go to http://localhost:3000
+8. Your magento site is running, however, it's using HTTPS by default. First we need to define the local environmental varibles for Magento.
+9. Copy and paste the file `src/app/etc/env.php` and paste it in the same directory with the name `env-local.php`.
+10. Repeat step 9 but name the file for `env-prod.php`. This file will be used to host sites on Coolify.
+11. Make sure to fill in the values with the correct information otherwise you will run into issues.
+12. Finally, run `bin/local` and enable local mode to view your Magento store locally.
+13. Go to http://localhost:3000

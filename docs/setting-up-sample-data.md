@@ -38,3 +38,5 @@
 4. Run `bin/composer update`
 
 5. Make sure the site is in developer mode using the following command: `bin/magento deploy:mode:set developer`
+6. Then run: `bin/magento sampledata:deploy`
+7. Reindex and flush cache using `bin/cmds` and you should see your sample data installed.

@@ -18,6 +18,15 @@ if [[ "$mode" == "enable" ]]; then
 	bin/cliq bin/magento config:set web/secure/use_in_adminhtml 0
 	bin/cliq bin/magento config:set web/unsecure/base_url http://localhost:3000/
 	bin/cliq bin/magento config:set web/secure/base_url http://localhost:3000/
+	echo "Disabled HTTPS"
+	# TODO: Check if we can use system environmentals for this instead of a file.
+	if ! [[ -f ./app/etc/env-local.php ]]; then
+		echo "WARNING: The file ./app/etc/env-local.php does not exist. Please copy and paste the contents of ./app/etc/env.php and replace the values with your local service values."
+		exit 1
+	fi
+	cp ./app/etc/env-local.php ./app/etc/env.php
+	bin/magento app:config:import -n
+	echo "Imported local environment variables."
 	bin/magento deploy:mode:set developer
 	echo "Running bin/cmds..."
 	bin/cliq bin/cmds
@@ -26,7 +35,16 @@ else
 	bin/cliq bin/magento config:set web/secure/use_in_frontend 1
 	bin/cliq bin/magento config:set web/secure/use_in_adminhtml 1
 	bin/cliq bin/magento config:set web/unsecure/base_url http://localhost:80/
-	bin/cliq bin/magento config:set web/secure/base_url http://localhost:80/
+	bin/cliq bin/magento config:set web/secure/base_url https://localhost:80/
+	echo "Enabled HTTPS"
+	# TODO: Check if we can use system environmentals for this instead of a file.
+	if ! [[ -f ./app/etc/env-prod.php ]]; then
+		echo "WARNING: The file ./app/etc/env-prod.php does not exist. Please copy and paste the contents of ./app/etc/env.php and replace the values with your production service values."
+		exit 1
+	fi
+	cp ./app/etc/env-prod.php ./app/etc/env.php
+	bin/magento app:config:import -n
+	echo "Imported production environment variables."
 	bin/magento deploy:mode:set production
 	echo "Running bin/cmds..."
 	bin/cliq bin/cmds
