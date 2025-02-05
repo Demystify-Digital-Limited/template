@@ -2,7 +2,7 @@ FROM shinsenter/magento:php8.1
 
 # Install required packages
 RUN apt update && apt upgrade -y
-RUN apt install curl git nano bash coreutils cron -y
+RUN apt install curl git nano bash coreutils cron wget -y
 
 # Install required PHP extensions
 RUN phpaddmod gd intl pdo_mysql soap xsl bcmath zip opcache

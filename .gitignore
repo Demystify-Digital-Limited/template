@@ -1,4 +1,6 @@
+# Remove this on an actual project
 src/
+
 src/generated
 src/vendor
 src/pub/static
@@ -43,8 +45,6 @@ src/pub/sitemap.xml
 src/.idea
 src/.gitattributes
 src/app/config_sandbox
-src/app/etc/config.php
-src/app/etc/env.php
 src/app/code/Magento/TestModule*
 src/lib/internal/flex/uploader/.actionScriptProperties
 src/lib/internal/flex/uploader/.flexProperties
