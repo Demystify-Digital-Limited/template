@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 [[ ! "$PWD" =~ /var/www/html$ ]] && echo "Please run commands in the root directory." && exit
-set -o errexit
 
 read -p "Do you want to enable or disable local mode? (enable/disable): " mode
 if [[ "$mode" != "enable" && "$mode" != "disable" ]]; then
