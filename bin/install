@@ -36,6 +36,12 @@ bin/magento setup:install \
   --opensearch-host="$OPENSEARCH_HOST" \
   --opensearch-port="$OPENSEARCH_PORT" \
   --search-engine=opensearch \
+  --remote-storage-driver="$REMOVE_STORAGE_DRIVER" \
+  --remote-storage-bucket="$REMOTE_STORAGE_BUCKET" \
+  --remote-storage-prefix="$REMOTE_STORAGE_PREFIX" \
+  --remote-storage-region="$REMOTE_STORAGE_REGION" \
+  --remote-storage-key="$REMOTE_STORAGE_KEY" \
+  --remote-storage-secret="$REMOTE_STORAGE_SECRET" \
   --use-rewrites=0 \
   --cleanup-database \
   --no-interaction
