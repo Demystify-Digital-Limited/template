@@ -11,6 +11,9 @@ RUN phpaddmod gd intl pdo_mysql soap xsl bcmath zip opcache
 RUN curl -s https://getcomposer.org/installer | php
 RUN alias composer='php composer.phar'
 
+# Remove the composer cache
+RUN rm -r /.composer
+
 # Set default environment variables
 ENV TZ=Europe/London
 ENV PHP_MEMORY_LIMIT=6144M

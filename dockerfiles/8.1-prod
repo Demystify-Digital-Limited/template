@@ -15,8 +15,8 @@ RUN phpaddmod mcrypt
 RUN curl -s https://getcomposer.org/installer | php
 RUN alias composer='php composer.phar'
 
-# Install croc
-RUN wget -qO- https://getcroc.schollz.com | bash
+# Remove the composer cache
+RUN rm -r /.composer
 
 # Copy the download file from the bin directory to /var/www
 COPY ./bin /var/www/html/bin
