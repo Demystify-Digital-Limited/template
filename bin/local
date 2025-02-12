@@ -1,13 +1,19 @@
 #!/usr/bin/env bash
 [[ ! "$PWD" =~ /var/www/html$ ]] && echo "Please run commands in the root directory." && exit
 
-read -p "Do you want to enable or disable local mode? (enable/disable): " mode
-if [[ "$mode" != "enable" && "$mode" != "disable" ]]; then
+MODE="$1"
+
+if [[ -z "$MODE" ]]; then
+	echo "Please specify 'enable' or 'disable'."
+	exit 1
+fi
+
+if [[ "$MODE" != "enable" && "$MODE" != "disable" ]]; then
 	echo "Invalid option. Please choose 'enable' or 'disable'."
 	exit
 fi
 
-if [[ "$mode" == "enable" ]]; then
+if [[ "$MODE" == "enable" ]]; then
 	read -p "WARNING: Using this command in production will break SSL and domain connectivity. Are you sure you are running this site locally? (yes/no): " confirm
 	if [[ "$confirm" != "yes" ]]; then
 		echo "Aborting."
@@ -49,4 +55,3 @@ else
 	bin/cliq bin/cmds
 	echo "Local mode disabled. Magento is at: https://$DOMAIN"
 fi
-
