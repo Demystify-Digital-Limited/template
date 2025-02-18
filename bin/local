@@ -34,7 +34,7 @@ if [[ "$MODE" == "enable" ]]; then
 	echo "Disabled HTTPS"
 	bin/magento deploy:mode:set developer
 	echo "Running bin/cmds..."
-	bin/cliq bin/cmds
+	bin/cmds
 	echo "Local mode enabled. Magento is at: http://localhost:3000. You can run 'bin/local disable' to disable local mode."
 else
 	# TODO: Check if we can use system environmentals for this instead of a file.
@@ -52,6 +52,6 @@ else
 	echo "Imported production environment variables."
 	bin/magento deploy:mode:set production
 	echo "Running bin/cmds..."
-	bin/cliq bin/cmds
+	bin/cmds
 	echo "Local mode disabled. Magento is at: https://$DOMAIN"
 fi
