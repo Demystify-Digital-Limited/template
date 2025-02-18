@@ -2,6 +2,6 @@
 [[ ! "$PWD" =~ /var/www/html$ ]] && echo "Please run commands in the root directory." && exit
 [ -z "$1" ] && echo "Please specify a service operation (start|stop|status|restart|reload|force-reload)" && exit
 
-bin/cliq service cron "$@"
+service cron "$@"
 bin/cliq touch /var/www/html/var/.setup_cronjob_status /var/www/html/var/.update_cronjob_status
-bin/cliq chown app:app /var/www/html/var/.setup_cronjob_status /var/www/html/var/.update_cronjob_status
+bin/cliq chown www-data:www-data /var/www/html/var/.setup_cronjob_status /var/www/html/var/.update_cronjob_status
