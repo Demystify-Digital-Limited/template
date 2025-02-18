@@ -6,7 +6,7 @@ ADD --chown=$APP_USER:$APP_GROUP ./bin/ /var/www/html/bin/
 
 # Install required packages
 RUN apt update && apt upgrade -y
-RUN apt install curl git nano bash coreutils cron wget -y
+RUN apt install curl git nano bash coreutils cron wget sudo curl -y
 
 # Install required PHP extensions
 RUN phpaddmod mcrypt
@@ -18,6 +18,10 @@ RUN alias composer='php composer.phar'
 # Remove the composer cache
 RUN rm -r /.composer
 
+# Install Node.js
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | sudo bash -
+RUN sudo apt-get install -y nodejs
+
 # Copy the download file from the bin directory to /var/www
 COPY ./bin /var/www/html/bin
 RUN chmod +x /var/www/html/bin/*
@@ -26,6 +30,9 @@ RUN chmod +x /var/www/html/bin/*
 ENV TZ=Europe/London
 ENV ALLOW_RUNTIME_PHP_ENVVARS=1
 ENV PHP_MEMORY_LIMIT=6144M
+ENV PHP_MAX_CHILDREN=10
+ENV PHP_MAX_EXECUTION_TIME=18000
+ENV PHP_MAX_INPUT_TIME=1800
 ENV DISABLE_AUTORUN_CREATING_PROJECT="true"
 # We will automatically run composer install and project setup during build
 ENV DISABLE_AUTORUN_COMPOSER_INSTALL="true"

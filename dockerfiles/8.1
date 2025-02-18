@@ -2,7 +2,7 @@ FROM shinsenter/magento:php8.1
 
 # Install required packages
 RUN apt update && apt upgrade -y
-RUN apt install curl git nano bash coreutils cron wget -y
+RUN apt install curl git nano bash coreutils cron wget sudo curl -y
 
 # Install required PHP extensions
 RUN phpaddmod gd intl pdo_mysql soap xsl bcmath zip opcache
@@ -14,9 +14,16 @@ RUN alias composer='php composer.phar'
 # Remove the composer cache
 RUN rm -r /.composer
 
+# Install Node.js
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | sudo bash -
+RUN sudo apt-get install -y nodejs
+
 # Set default environment variables
 ENV TZ=Europe/London
 ENV PHP_MEMORY_LIMIT=6144M
+ENV PHP_MAX_CHILDREN=10
+ENV PHP_MAX_EXECUTION_TIME=18000
+ENV PHP_MAX_INPUT_TIME=1800
 
 # Copy the download file from the bin directory to /var/www
 COPY ./bin /var/www/bin
