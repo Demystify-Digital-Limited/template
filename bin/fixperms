@@ -2,6 +2,6 @@
 [[ ! "$PWD" =~ /var/www/html$ ]] && echo "Please run commands in the root directory." && exit
 echo "Fixing filesystem permissions..."
 
-chown -R www-data:www-data .
+find . -path ./var/import/images -prune -o -exec chown www-data:www-data {} +
 
 echo "Filesystem permissions fixed."
