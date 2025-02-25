@@ -37,4 +37,8 @@ ENV DISABLE_AUTORUN_CREATING_PROJECT="true"
 # We will automatically run composer install and project setup during build
 ENV DISABLE_AUTORUN_COMPOSER_INSTALL="true"
 
+# Copy the custom nginx files to the container
+COPY ./nginx/default.conf /etc/nginx/sites-enabled/00-default.conf
+COPY ./nginx/magento.conf /etc/nginx/custom.d/magento.conf
+
 EXPOSE 80

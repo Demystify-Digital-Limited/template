@@ -48,6 +48,12 @@ cp -r ./template-main/dockerfiles/* ./dockerfiles/
 echo "Updating docs files..."
 cp -r ./template-main/docs/* ./docs/
 
+echo "Adding nginx files if they aren't there already..."
+if [[ ! -d ./nginx ]]; then
+	mkdir ./nginx
+	cp -r ./template-main/nginx/* ./nginx/
+fi
+
 echo "Updating misc files..."
 # Can cause issues if people don't pay attention
 # cp -r ./template-main/.gitignore ./.gitignore
