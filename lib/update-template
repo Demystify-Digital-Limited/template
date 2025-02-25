@@ -49,7 +49,8 @@ echo "Updating docs files..."
 cp -r ./template-main/docs/* ./docs/
 
 echo "Updating misc files..."
-cp -r ./template-main/.gitignore ./.gitignore
+# Can cause issues if people don't pay attention
+# cp -r ./template-main/.gitignore ./.gitignore
 cp -r ./template-main/.dockerignore ./.dockerignore
 cp -r ./template-main/env/all.env.example ./env/all.env.example
 cp -r ./template-main/lib/* ./lib/
